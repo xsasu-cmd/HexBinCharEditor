@@ -2,6 +2,12 @@
 #include <sstream> // For string stream
 #include <bitset> // For bit manipulation
 #include <iostream> // For error handling
+#include <cctype> // For isprint
+#include <iomanip> // For formatting output
+#include <string> // For string handling
+#include <vector> // For buffer storage
+#include <algorithm> // For std::find_if
+#include <optional> // For optional byte value
 
 std::optional<unsigned char> InputHandler::parseInput(const std::string& input) const { // Takes a string and returns an optional byte value if valid
     if (input.empty()) return std::nullopt; // Check if input is empty
