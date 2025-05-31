@@ -41,12 +41,22 @@ void AppController::displayMenu(const std::string& filePath) { // Display the fi
 
         // Check for quit command
         if (command == "quit") { 
+            if (changesMade) {
+                std::cout << "You have unsaved changes. Do you really want to quit? (y/n): ";
+                std::string response;
+                std::getline(std::cin, response); // Get user confirmation
+                if (response != "y" && response != "Y") { // Check if user wants to quit
+                    std::cout << "Quit cancelled.\n"; // If not, cancel quit
+                    continue; // If not, continue the loop
+                }
+            }
             running = false;
         
         // Check for save command
         } else if (command == "save") { 
             if (fileHandler.saveFile(filePath, editorCore.getBuffer())) { // Save the buffer to the file
                 std::cout << "File saved successfully.\n"; // Success message
+                changesMade = false; // Reset changesMade flag after saving
             } else {
                 std::cout << "Failed to save file.\n"; // Error handling
             }
@@ -60,7 +70,8 @@ void AppController::displayMenu(const std::string& filePath) { // Display the fi
                 valueStr.erase(0, valueStr.find_first_not_of(" \t")); // Remove leading whitespace
                 auto val = inputHandler.parseInput(valueStr); // Parse the value
                 if (val && editorCore.editByte(offset, *val)) { // Edit the byte in the buffer
-                    std::cout << "Byte edited.\n"; 
+                    std::cout << "Byte edited.\n";
+                    changesMade = true; // Set flag to indicate changes were made 
                 } else {
                     std::cout << "Invalid offset or value.\n"; // Error handling
                 }

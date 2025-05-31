@@ -21,6 +21,8 @@ private:
     DisplayRenderer displayRenderer; // Instance of DisplayRenderer to handle rendering
     InputHandler inputHandler; // Instance of InputHandler to manage user input
     EditorCore editorCore; // Instance of EditorCore to handle core functionality
+
+    bool changesMade = false; // Flag to track if changes were made to the file
 };
 
 #endif
